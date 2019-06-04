@@ -1,6 +1,6 @@
 {
   "name": "react-video-status-zw",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "a video timing control component for zw's object",
   "main": "./dist/bundle.js",
   "private": false,

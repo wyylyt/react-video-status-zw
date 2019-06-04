@@ -47,6 +47,11 @@ class App extends Component {
     });
   }
 
+  onStateChange=(type, state) => {
+    console.log('type', type);
+    console.log('state', state);
+  }
+
   render() {
     const { playingStatus, direction } = this.state;
     return (
@@ -75,6 +80,7 @@ class App extends Component {
             playingStatus={playingStatus}
             direction={direction}
             interval={1000}
+            onStateChange={this.onStateChange}
           />
         </div>
         <hr />

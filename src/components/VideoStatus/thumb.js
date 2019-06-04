@@ -14,6 +14,7 @@ class Thumb extends Component {
     playingStatus: PropTypes.string, // 是否开始播放
     interval: PropTypes.number.isRequired, // 播放速度
     direction: PropTypes.string.isRequired,
+    onStateChange: PropTypes.func.isRequired,
   }
 
   static defaultProps={
@@ -57,6 +58,7 @@ class Thumb extends Component {
         currentMinute,
         currentSecond,
       });
+      this.triggerStateChange('点击事件');
     }
 
     if (playingStatus === 'start' && playingStatusPrev !== 'start') {
@@ -94,8 +96,9 @@ onStartPlaying=() => {
     currentMinute: minute,
     currentSecond: second,
   }, () => {
-    this.setThumbLeftInterval();
+    this.triggerStateChange('开始播放');
 
+    this.setThumbLeftInterval();
     this.setPlayingTimer();
   });
 }
@@ -123,6 +126,7 @@ onStopPlaying=() => {
     currentMinute: 0,
     currentSecond: 0,
   });
+  this.triggerStateChange('停止播放');
 }
 
 /**
@@ -131,6 +135,7 @@ onStopPlaying=() => {
 onPausePlaying=() => {
   if (this.timer) {
     clearInterval(this.timer);
+    this.triggerStateChange('暂停播放');
   }
 }
 
@@ -139,6 +144,7 @@ onPausePlaying=() => {
  */
 onContinuePlaying=() => {
   this.setPlayingTimer();
+  this.triggerStateChange('继续播放');
 }
 
 /**
@@ -224,6 +230,7 @@ setThumbLeftInterval=() => {
     currentMinute: m,
     currentSecond: s,
   });
+  this.triggerStateChange('持续播放');
 }
 
 /**
@@ -295,6 +302,7 @@ transformSecToHMS=(sec) => {
      this.setState({
        thumbLeft: left,
      });
+     this.triggerStateChange('缩放事件');
    }
 
    thumbMouseDown=(event) => {
@@ -304,8 +312,10 @@ transformSecToHMS=(sec) => {
        mouseDownX: event.pageX,
        mouseDownThumbLeft: thumbLeft,
      });
+
      document.onmousemove = this.documentMouseMove;
      document.onmouseup = this.documentMouseUp;
+     this.triggerStateChange('拖拽开始');
    }
 
    /**
@@ -330,6 +340,7 @@ transformSecToHMS=(sec) => {
        currentMinute,
        currentSecond,
      });
+     this.triggerStateChange('拖拽事件');
    }
 
    /**
@@ -338,6 +349,7 @@ transformSecToHMS=(sec) => {
    documentMouseUp=() => {
      document.onmousemove = null;
      document.onmousemove = null;
+     this.triggerStateChange('拖拽结束');
    }
 
    /**
@@ -389,6 +401,33 @@ transformSecToHMS=(sec) => {
      const { thumbLeft } = this.state;
      const { thumbContainerWidth } = this.props;
      return thumbLeft >= -32 && thumbLeft <= thumbContainerWidth - 32;
+   }
+
+   /**
+    * 状态变化触发回调
+    */
+   triggerStateChange=(type) => {
+     const { onStateChange } = this.props;
+     if (typeof onStateChange === 'function') {
+       const {
+         intervalHour, intervalMinute, interval, direction, timeLevel, channels,
+       } = this.props;
+       const { currentHour, currentMinute, currentSecond } = this.state;
+
+       const state = {
+         intervalHour,
+         intervalMinute,
+         interval,
+         direction,
+         timeLevel,
+         channels,
+         currentHour,
+         currentMinute,
+         currentSecond,
+       };
+
+       onStateChange(type, state);
+     }
    }
 
    render() {

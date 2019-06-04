@@ -11,6 +11,7 @@ class VideoStatus extends Component {
     playingStatus: PropTypes.string, // 播放状态 start,pause,stop,continue
     direction: PropTypes.string, // 播放方向，正常播放 forward，后退 backward
     interval: PropTypes.number, // 播放速度
+    onStateChange: PropTypes.func, // 状态变化回调方法
   }
 
   static defaultProps={
@@ -19,6 +20,7 @@ class VideoStatus extends Component {
     playingStatus: '',
     direction: 'forward',
     interval: 1000,
+    onStateChange: null,
   }
 
   constructor(props) {
@@ -320,7 +322,7 @@ render() {
     contBoxWidth, containerLeftWidth, timeLevel, intervalHour, intervalMinute, thumbLeftProp,
   } = this.state;
   const {
-    channels, playingStatus, channelData, direction, interval,
+    channels, playingStatus, channelData, direction, interval, onStateChange,
   } = this.props;
   const wid = contBoxWidth - containerLeftWidth;
   console.log('render', wid);
@@ -349,6 +351,7 @@ render() {
                           channelData={channelData}
                           direction={direction}
                           interval={interval}
+                          onStateChange={onStateChange}
                         />
 
                       </div>
