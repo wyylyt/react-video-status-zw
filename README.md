@@ -1,5 +1,5 @@
 # react-video-status-zw
-a video timing control component for zw's object
+显示和控制多通道视频播放，包含进度，速度，时分秒切换，向前向后播放功能
 * 安装方式<br>
 npm install react-video-status-zw <br>
 * 代码示例<br>
