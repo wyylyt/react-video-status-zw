@@ -5,7 +5,7 @@ npm install react-video-status-zw <br>
 * 代码示例<br>
 ```
 import React, { Component } from 'react';
-import VideoStatus from '../../src/components/VideoStatus';
+import VideoStatus from 'react-video-status-zw';
 
 class App extends Component {
   constructor(props) {
