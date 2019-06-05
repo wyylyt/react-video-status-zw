@@ -113,4 +113,7 @@ playingStatus|string|yes|播放状态start,pause,stop,continue
 direction|string|no|播放方向，正常播放 forward，后退 backward
 interval|number|no|播放速度、时间间隔
 
+* 预览
+
+![预览](./examples/img/effect-pic.png?raw=true '预览')
 
