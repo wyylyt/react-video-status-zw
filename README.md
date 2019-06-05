@@ -51,6 +51,11 @@ class App extends Component {
       direction: 'backward',
     });
   }
+  
+  onStateChange=(type, state) => {
+    console.log('type', type);
+    console.log('state', state);
+  }
 
   render() {
     const { playingStatus, direction } = this.state;
@@ -80,6 +85,7 @@ class App extends Component {
             playingStatus={playingStatus}
             direction={direction}
             interval={100}
+            onStateChange={this.onStateChange}
           />
         </div>
         <hr />
